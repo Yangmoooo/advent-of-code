@@ -2,11 +2,11 @@ use aoc2020::{print_answer, read_file};
 
 fn main() {
     let input = read_file("aoc2020/inputs/day02.txt");
-    print_answer("day02", "part1", part1(&input));
-    print_answer("day02", "part2", part2(&input));
+    print_answer(2, false, solve1(&input));
+    print_answer(2, true, solve2(&input));
 }
 
-fn part1(input: &str) -> Option<u32> {
+fn solve1(input: &str) -> Option<u32> {
     let entries = input
         .lines()
         .map(|line| {
@@ -30,7 +30,7 @@ fn part1(input: &str) -> Option<u32> {
     Some(valid)
 }
 
-fn part2(input: &str) -> Option<u32> {
+fn solve2(input: &str) -> Option<u32> {
     let entries = input
         .lines()
         .map(|line| {
@@ -56,15 +56,16 @@ fn part2(input: &str) -> Option<u32> {
 
 #[cfg(test)]
 mod day02 {
+    use super::*;
     const EXAMPLE: &str = "1-3 a: abcde\n1-3 b: cdefg\n2-9 c: ccccccccc";
 
     #[test]
     fn part1() {
-        assert_eq!(super::part1(EXAMPLE), Some(2));
+        assert_eq!(solve1(EXAMPLE), Some(2));
     }
 
     #[test]
     fn part2() {
-        assert_eq!(super::part2(EXAMPLE), Some(1));
+        assert_eq!(solve2(EXAMPLE), Some(1));
     }
 }

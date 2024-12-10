@@ -2,11 +2,11 @@ use aoc2020::{print_answer, read_file};
 
 fn main() {
     let input = read_file("aoc2020/inputs/day03.txt");
-    print_answer("day03", "part1", part1(&input));
-    print_answer("day03", "part2", part2(&input));
+    print_answer(3, false, solve1(&input));
+    print_answer(3, true, solve2(&input));
 }
 
-fn part1(input: &str) -> Option<u32> {
+fn solve1(input: &str) -> Option<u32> {
     let lines = input.lines().collect::<Vec<&str>>();
     let mut x = 0;
     let mut y = 0;
@@ -23,7 +23,7 @@ fn part1(input: &str) -> Option<u32> {
     Some(trees)
 }
 
-fn part2(input: &str) -> Option<u32> {
+fn solve2(input: &str) -> Option<u32> {
     let lines = input.lines().collect::<Vec<&str>>();
     let mut trees = 1;
     for (dx, dy) in &[(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)] {
@@ -46,6 +46,7 @@ fn part2(input: &str) -> Option<u32> {
 
 #[cfg(test)]
 mod day03 {
+    use super::*;
     const EXAMPLE: &str = "..##.......\n\
                            #...#...#..\n\
                            .#....#..#.\n\
@@ -60,11 +61,11 @@ mod day03 {
 
     #[test]
     fn part1() {
-        assert_eq!(super::part1(EXAMPLE), Some(7));
+        assert_eq!(solve1(EXAMPLE), Some(7));
     }
 
     #[test]
     fn part2() {
-        assert_eq!(super::part2(EXAMPLE), Some(336));
+        assert_eq!(solve2(EXAMPLE), Some(336));
     }
 }
