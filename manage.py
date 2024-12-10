@@ -59,20 +59,11 @@ def create_src_file(src_file, year, day, input_file):
         f.write("}\n")
 
 
-def add_cargo_bin(cargo_toml, day):
-    with open(cargo_toml, "a") as f:
-        f.write(f'\n[[bin]]\nname = "day{day}"\npath = "src/day{day}.rs"\n')
-
-
 def aoc_fetch(year, day):
-    raw_day = day
-    day = "{:02d}".format(day)
     input_file = f"aoc{year}/inputs/day{day}.txt"
     aoc_download(year, day, input_file)
-    src_file = f"aoc{year}/src/day{day}.rs"
-    cargo_toml = f"aoc{year}/Cargo.toml"
-    create_src_file(src_file, year, raw_day, input_file)
-    add_cargo_bin(cargo_toml, day)
+    src_file = f"aoc{year}/src/bin/day{day}.rs"
+    create_src_file(src_file, year, int(day), input_file)
 
 
 def aoc_run(year, day, test_first):
@@ -125,7 +116,7 @@ def main():
 
     match args.command:
         case "fetch" | "f":
-            aoc_fetch(year, args.day)
+            aoc_fetch(year, day)
         case "run" | "r":
             aoc_run(year, day, args.test)
         case "test" | "t":
