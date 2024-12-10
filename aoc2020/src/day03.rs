@@ -6,7 +6,7 @@ fn main() {
     print_answer(3, true, solve2(&input));
 }
 
-fn solve1(input: &str) -> Option<u32> {
+fn solve1(input: &str) -> Option<usize> {
     let lines = input.lines().collect::<Vec<&str>>();
     let mut x = 0;
     let mut y = 0;
@@ -23,7 +23,7 @@ fn solve1(input: &str) -> Option<u32> {
     Some(trees)
 }
 
-fn solve2(input: &str) -> Option<u32> {
+fn solve2(input: &str) -> Option<usize> {
     let lines = input.lines().collect::<Vec<&str>>();
     let mut trees = 1;
     for (dx, dy) in &[(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)] {

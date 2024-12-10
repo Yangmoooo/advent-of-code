@@ -6,7 +6,7 @@ fn main() {
     print_answer(2, true, solve2(&input));
 }
 
-fn solve1(input: &str) -> Option<u32> {
+fn solve1(input: &str) -> Option<usize> {
     let entries = input
         .lines()
         .map(|line| {
@@ -30,7 +30,7 @@ fn solve1(input: &str) -> Option<u32> {
     Some(valid)
 }
 
-fn solve2(input: &str) -> Option<u32> {
+fn solve2(input: &str) -> Option<usize> {
     let entries = input
         .lines()
         .map(|line| {

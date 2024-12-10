@@ -9,11 +9,11 @@ fn main() {
     print_answer(1, true, solve2(&input));
 }
 
-fn solve1(input: &str) -> Option<u32> {
+fn solve1(input: &str) -> Option<usize> {
     let nums = input
         .lines()
-        .map(|line| line.parse::<u32>().unwrap())
-        .collect::<Vec<u32>>();
+        .map(|line| line.parse::<usize>().unwrap())
+        .collect::<Vec<usize>>();
 
     let mut done = HashSet::new();
     for i in nums {
@@ -26,11 +26,11 @@ fn solve1(input: &str) -> Option<u32> {
     None
 }
 
-fn solve2(input: &str) -> Option<u32> {
+fn solve2(input: &str) -> Option<usize> {
     let mut nums = input
         .lines()
-        .map(|line| line.parse::<u32>().unwrap())
-        .collect::<Vec<u32>>();
+        .map(|line| line.parse::<usize>().unwrap())
+        .collect::<Vec<usize>>();
 
     nums.sort();
     let n = nums.len();
