@@ -47,7 +47,9 @@ def aoc_download(year, day, input_file):
         "--input-file",
         input_file,
     ]
-    subprocess.run(download_cmd)
+    exitcode = subprocess.run(download_cmd)
+    if exitcode.returncode != 0:
+        exit(1)
 
 
 def create_src_file(src_file, year, day, input_file):
