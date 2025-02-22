@@ -1,14 +1,15 @@
 use std::collections::HashMap;
 
-use aoc2020::{print_answer, read_file};
+use aoc2020::*;
 
 fn main() {
     let input = read_file("aoc2020/inputs/day04.txt");
-    print_answer(4, false, solve1(&input));
-    print_answer(4, true, solve2(&input));
+    let answer_a = solve_a(&input);
+    let answer_b = solve_b(&input);
+    print_answer(4, (answer_a, answer_b));
 }
 
-fn solve1(input: &str) -> Option<usize> {
+fn solve_a(input: &str) -> Option<usize> {
     Some(
         input
             .split("\n\n")
@@ -25,7 +26,7 @@ fn solve1(input: &str) -> Option<usize> {
     )
 }
 
-fn solve2(input: &str) -> Option<usize> {
+fn solve_b(input: &str) -> Option<usize> {
     let required_fields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
     Some(
         input
@@ -76,11 +77,11 @@ fn is_valid_passport(fields: &HashMap<&str, &str>) -> bool {
 }
 
 #[cfg(test)]
-mod day04 {
+mod day_04 {
     use super::*;
 
     #[test]
-    fn part1() {
+    fn part_a() {
         let example = "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd\n\
                        byr:1937 iyr:2017 cid:147 hgt:183cm\n\
                        \n\
@@ -94,11 +95,11 @@ mod day04 {
                        \n\
                        hcl:#cfa07d eyr:2025 pid:166559648\n\
                        iyr:2011 ecl:brn hgt:59in";
-        assert_eq!(solve1(example), Some(2));
+        assert_eq!(solve_a(example), Some(2));
     }
 
     #[test]
-    fn part2() {
+    fn part_b() {
         let example1 = "eyr:1972 cid:100\n\
                        hcl:#18171d ecl:amb hgt:170 pid:186cm iyr:2018 byr:1926\n\
                        \n\
@@ -125,7 +126,7 @@ mod day04 {
                        eyr:2022\n\
                        \n\
                        iyr:2010 hgt:158cm hcl:#b6652a ecl:blu byr:1944 eyr:2021 pid:093154719";
-        assert_eq!(solve2(example1), Some(0));
-        assert_eq!(solve2(example2), Some(4));
+        assert_eq!(solve_b(example1), Some(0));
+        assert_eq!(solve_b(example2), Some(4));
     }
 }

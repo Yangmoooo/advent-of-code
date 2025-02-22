@@ -1,12 +1,13 @@
-use aoc2020::{print_answer, read_file};
+use aoc2020::*;
 
 fn main() {
     let input = read_file("aoc2020/inputs/day02.txt");
-    print_answer(2, false, solve1(&input));
-    print_answer(2, true, solve2(&input));
+    let answer_a = solve_a(&input);
+    let answer_b = solve_b(&input);
+    print_answer(2, (answer_a, answer_b));
 }
 
-fn solve1(input: &str) -> Option<usize> {
+fn solve_a(input: &str) -> Option<usize> {
     let entries = input
         .lines()
         .map(|line| {
@@ -30,7 +31,7 @@ fn solve1(input: &str) -> Option<usize> {
     Some(valid)
 }
 
-fn solve2(input: &str) -> Option<usize> {
+fn solve_b(input: &str) -> Option<usize> {
     let entries = input
         .lines()
         .map(|line| {
@@ -55,17 +56,17 @@ fn solve2(input: &str) -> Option<usize> {
 }
 
 #[cfg(test)]
-mod day02 {
+mod day_02 {
     use super::*;
     const EXAMPLE: &str = "1-3 a: abcde\n1-3 b: cdefg\n2-9 c: ccccccccc";
 
     #[test]
-    fn part1() {
-        assert_eq!(solve1(EXAMPLE), Some(2));
+    fn part_a() {
+        assert_eq!(solve_a(EXAMPLE), Some(2));
     }
 
     #[test]
-    fn part2() {
-        assert_eq!(solve2(EXAMPLE), Some(1));
+    fn part_b() {
+        assert_eq!(solve_b(EXAMPLE), Some(1));
     }
 }

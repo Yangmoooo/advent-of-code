@@ -1,12 +1,13 @@
-use aoc2020::{print_answer, read_file};
+use aoc2020::*;
 
 fn main() {
     let input = read_file("aoc2020/inputs/day05.txt");
-    print_answer(5, false, solve1(&input));
-    print_answer(5, true, solve2(&input));
+    let answer_a = solve_a(&input);
+    let answer_b = solve_b(&input);
+    print_answer(5, (answer_a, answer_b));
 }
 
-fn solve1(input: &str) -> Option<usize> {
+fn solve_a(input: &str) -> Option<usize> {
     input
         .lines()
         .map(|line| {
@@ -22,7 +23,7 @@ fn solve1(input: &str) -> Option<usize> {
         .max()
 }
 
-fn solve2(input: &str) -> Option<usize> {
+fn solve_b(input: &str) -> Option<usize> {
     let mut seat_ids: Vec<usize> = input
         .lines()
         .map(|line| {
@@ -44,15 +45,15 @@ fn solve2(input: &str) -> Option<usize> {
 }
 
 #[cfg(test)]
-mod day05 {
+mod day_05 {
     use super::*;
 
     #[test]
-    fn part1() {
+    fn part_a() {
         let example = "FBFBBFFRLR\n\
                        BFFFBBFRRR\n\
                        FFFBBBFRRR\n\
                        BBFFBBFRLL";
-        assert_eq!(solve1(example), Some(820));
+        assert_eq!(solve_a(example), Some(820));
     }
 }

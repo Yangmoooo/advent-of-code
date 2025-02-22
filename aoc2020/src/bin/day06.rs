@@ -1,14 +1,15 @@
 use std::collections::HashSet;
 
-use aoc2020::{print_answer, read_file};
+use aoc2020::*;
 
 fn main() {
     let input = read_file("aoc2020/inputs/day06.txt");
-    print_answer(6, false, solve1(&input));
-    print_answer(6, true, solve2(&input));
+    let answer_a = solve_a(&input);
+    let answer_b = solve_b(&input);
+    print_answer(6, (answer_a, answer_b));
 }
 
-fn solve1(input: &str) -> Option<usize> {
+fn solve_a(input: &str) -> Option<usize> {
     Some(
         input
             .split("\n\n")
@@ -23,7 +24,7 @@ fn solve1(input: &str) -> Option<usize> {
     )
 }
 
-fn solve2(input: &str) -> Option<usize> {
+fn solve_b(input: &str) -> Option<usize> {
     let groups = input.split("\n\n").collect::<Vec<&str>>();
     let mut cnt = 0;
     for group in groups {
@@ -38,11 +39,11 @@ fn solve2(input: &str) -> Option<usize> {
 }
 
 #[cfg(test)]
-mod day06 {
+mod day_06 {
     use super::*;
 
     #[test]
-    fn part1() {
+    fn part_a() {
         let example = "abc\n\
                        \n\
                        a\n\
@@ -58,11 +59,11 @@ mod day06 {
                        a\n\
                        \n\
                        b";
-        assert_eq!(solve1(example), Some(11));
+        assert_eq!(solve_a(example), Some(11));
     }
 
     #[test]
-    fn part2() {
+    fn part_b() {
         let example = "abc\n\
                        \n\
                        a\n\
@@ -78,6 +79,6 @@ mod day06 {
                        a\n\
                        \n\
                        b";
-        assert_eq!(solve2(example), Some(6));
+        assert_eq!(solve_b(example), Some(6));
     }
 }

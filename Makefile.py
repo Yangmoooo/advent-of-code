@@ -16,10 +16,17 @@ def arg_parser():
     parser_fetch = subparsers.add_parser(
         "fetch",
         aliases=["f"],
-        help="Download the input using aoc-cli. Prepare the src and Cargo.toml",
+        help="Download the input with aoc-cli",
     )
     parser_fetch.add_argument("year", nargs="?", type=int, help=year_msg)
     parser_fetch.add_argument("day", type=int, help=day_msg)
+
+    # new 子命令
+    parser_new = subparsers.add_parser(
+        "new", aliases=["n"], help="Create a new solution"
+    )
+    parser_new.add_argument("year", nargs="?", type=int, help=year_msg)
+    parser_new.add_argument("day", type=int, help=day_msg)
 
     # run 子命令
     parser_run = subparsers.add_parser("run", aliases=["r"], help="Run the solution")
@@ -52,20 +59,28 @@ def aoc_download(year, day, input_file):
         exit(1)
 
 
-def create_src_file(src_file, year, day, input_file):
-    with open(src_file, "x") as f:
-        f.write(f"use aoc{year}::{{print_answer, read_file}};\n\n")
-        f.write("fn main() {\n")
-        f.write(f'    let input = read_file("{input_file}");\n')
-        f.write(f"    print_answer({day}, false, solve1(&input));\n")
-        f.write("}\n")
-
-
 def aoc_fetch(year, day):
     input_file = f"aoc{year}/inputs/day{day}.txt"
     aoc_download(year, day, input_file)
+
+
+def aoc_new(year, day):
+    input_file = f"aoc{year}/inputs/day{day}.txt"
     src_file = f"aoc{year}/src/bin/day{day}.rs"
-    create_src_file(src_file, year, int(day), input_file)
+    with open(src_file, "x") as f:
+        f.write(f"use aoc{year}::*;\n\n")
+        f.write("fn main() {\n")
+        f.write(f'    let input = read_file("{input_file}");\n')
+        f.write("    let answer_a = solve_a(&input);\n")
+        f.write("    let answer_b = solve_b(&input);\n")
+        f.write(f"    print_answer({int(day)}, (answer_a, answer_b));\n")
+        f.write("}\n\n")
+        f.write("fn solve_a(input: &str) -> Option<usize> {\n")
+        f.write("    None\n")
+        f.write("}\n\n")
+        f.write("fn solve_b(input: &str) -> Option<usize> {\n")
+        f.write("    None\n")
+        f.write("}\n\n")
 
 
 def aoc_run(year, day, test_first):
@@ -119,6 +134,8 @@ def main():
     match args.command:
         case "fetch" | "f":
             aoc_fetch(year, day)
+        case "new" | "n":
+            aoc_new(year, day)
         case "run" | "r":
             aoc_run(year, day, args.test)
         case "test" | "t":

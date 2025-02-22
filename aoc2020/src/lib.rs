@@ -1,17 +1,8 @@
-use std::fs::File;
-use std::io::Read;
-
 pub fn read_file(path: &str) -> String {
-    let mut file = File::open(path).unwrap();
-    let mut input = String::new();
-    file.read_to_string(&mut input).unwrap();
-    input
+    std::fs::read_to_string(path).expect("Failed to read file")
 }
 
-pub fn print_answer(day: u8, is_second: bool, answer: Option<usize>) {
-    let part = if is_second { "Part2" } else { "Part1" };
-    match answer {
-        Some(answer) => println!("[AoC 2020 Day{day:02} {part}] {answer}"),
-        None => println!("[AoC 2020 Day{day:02} {part}] None"),
-    }
+pub fn print_answer(day: u8, answers: (Option<usize>, Option<usize>)) {
+    println!("[AoC 2020 {day:02}-A] {:?}", answers.0);
+    println!("[AoC 2020 {day:02}-B] {:?}", answers.1);
 }
