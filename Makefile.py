@@ -27,17 +27,20 @@ def arg_parser():
     )
     parser_new.add_argument("year", nargs="?", type=int, help=year_msg)
     parser_new.add_argument("day", type=int, help=day_msg)
+    parser_new.add_argument(
+        "-f", "--fetch", action="store_true", help="Fetch before create"
+    )
+
+    # test 子命令
+    parser_test = subparsers.add_parser("test", aliases=["t"], help="Test the solution")
+    parser_test.add_argument("year", nargs="?", type=int, help=year_msg)
+    parser_test.add_argument("day", type=int, help=day_msg)
 
     # run 子命令
     parser_run = subparsers.add_parser("run", aliases=["r"], help="Run the solution")
     parser_run.add_argument("year", nargs="?", type=int, help=year_msg)
     parser_run.add_argument("day", type=int, help=day_msg)
     parser_run.add_argument("-t", "--test", action="store_true", help="Test before run")
-
-    # test 子命令
-    parser_test = subparsers.add_parser("test", aliases=["t"], help="Test the solution")
-    parser_test.add_argument("year", nargs="?", type=int, help=year_msg)
-    parser_test.add_argument("day", type=int, help=day_msg)
 
     return parser
 
@@ -64,8 +67,10 @@ def aoc_fetch(year, day):
     aoc_download(year, day, input_file)
 
 
-def aoc_new(year, day):
+def aoc_new(year, day, fetch_first):
     input_file = f"aoc{year}/inputs/day{day}.txt"
+    if fetch_first:
+        aoc_download(year, day, input_file)
     src_file = f"aoc{year}/src/bin/day{day}.rs"
     with open(src_file, "x") as f:
         f.write(f"use aoc{year}::*;\n\n")
@@ -81,6 +86,18 @@ def aoc_new(year, day):
         f.write("fn solve_b(input: &str) -> Option<usize> {\n")
         f.write("    None\n")
         f.write("}\n\n")
+
+
+def aoc_test(year, day):
+    test_cmd = [
+        "cargo",
+        "test",
+        "--package",
+        "aoc" + year,
+        "--bin",
+        "day" + day,
+    ]
+    subprocess.run(test_cmd)
 
 
 def aoc_run(year, day, test_first):
@@ -109,18 +126,6 @@ def aoc_run(year, day, test_first):
         subprocess.run(run_cmd)
 
 
-def aoc_test(year, day):
-    test_cmd = [
-        "cargo",
-        "test",
-        "--package",
-        "aoc" + year,
-        "--bin",
-        "day" + day,
-    ]
-    subprocess.run(test_cmd)
-
-
 def main():
     parser = arg_parser()
     args = parser.parse_args()
@@ -135,11 +140,11 @@ def main():
         case "fetch" | "f":
             aoc_fetch(year, day)
         case "new" | "n":
-            aoc_new(year, day)
-        case "run" | "r":
-            aoc_run(year, day, args.test)
+            aoc_new(year, day, args.fetch)
         case "test" | "t":
             aoc_test(year, day)
+        case "run" | "r":
+            aoc_run(year, day, args.test)
         case _:
             parser.print_help()
 
